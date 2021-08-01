@@ -34,7 +34,7 @@ public class TitanicAnalysis {
         return allPassengers;
     }
 
-    public void graphPassengerAges(List<Passenger> passengerList) {
+    public void graphPassengerAges(List<Passenger> passengerList) throws IOException {
         List<Float> pAges = passengerList.stream ().map (Passenger::getAge).limit (8).collect (Collectors.toList ());
         List<String> pNames = passengerList.stream ().map (Passenger::getName).limit (8).collect (Collectors.toList ());
         CategoryChart chart = new CategoryChartBuilder().width (800).height (600).title ("Age Histogram").xAxisTitle ("Names").yAxisTitle ("Age").build ();
@@ -42,6 +42,7 @@ public class TitanicAnalysis {
         chart.getStyler ().setHasAnnotations (true);
         chart.getStyler ().setStacked (true);
         chart.addSeries ("Passenger's Ages", pNames, pAges);
+        BitmapEncoder.saveBitmap(chart, "./Sample_Chart", BitmapEncoder.BitmapFormat.JPG);
         new SwingWrapper(chart).displayChart ();
     }
 
